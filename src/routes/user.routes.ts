@@ -13,6 +13,7 @@ class UsersRoutes{
      }
 
     getRoutes() {
+        this.router.get('/id', this.authMiddleware.auth ,this.usersController.show.bind(this.usersController))
         this.router.post('/auth', this.usersController.auth.bind(this.usersController))
         this.router.put('/', this.usersController.update.bind(this.usersController))
         this.router.post('/', this.usersController.store.bind(this.usersController))

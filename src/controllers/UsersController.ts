@@ -9,8 +9,15 @@ class UsersController {
     index(){
         //buscar todos
     }
-    show(){
-        //buscar somente um
+    async show(req: Request, res: Response, next: NextFunction){
+        const {user_id} = req
+
+        try {
+            const response = await this.userServices.getByUserId(user_id)
+            return res.status(201).json(response)
+        } catch (error) {
+            next(error)
+        }
     }
     async store(req: Request, res: Response, next: NextFunction){
         const { name, password, email } = req.body

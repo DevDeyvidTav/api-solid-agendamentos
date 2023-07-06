@@ -7,8 +7,9 @@ class SchedulesService {
     constructor(){
         this.schedulesRepository = new SchedulesRepository()
     }
-    async getSchedulesByUser(user_id: string){
-        const checkIfHasSchedules =  await this.schedulesRepository.findByUserId(user_id)
+    async getSchedulesByUser(user_id: string, date: Date){
+        const day = date
+        const checkIfHasSchedules =  await this.schedulesRepository.findByUserId(user_id, date )
         if (checkIfHasSchedules === undefined){
             throw new Error('Schedules not found')
         }

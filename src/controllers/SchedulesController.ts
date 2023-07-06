@@ -11,7 +11,7 @@ class SchedulesController {
     async store(req: Request, res: Response, next: NextFunction){
        
         const {name, phone, date} = req.body
-        const {user_id} = req.body
+        const {user_id} = req
        try {
         const response = await this.schedulesService.create({name, phone, date, user_id})
         res.status(201).json(response)
@@ -31,16 +31,20 @@ class SchedulesController {
             next(error)
         }
     }
-    async getSchedulesByUser (req: Request, res: Response, next: NextFunction){
-        const {user_id} = req
-
+    async getSchedulesByUser(req: Request, res: Response, next: NextFunction) {
+        const { user_id } = req;
+        const { date } = req.query;
+      
+        const day = date ? new Date(date as string) : new Date();
+        
+      
         try {
-            const response = await this.schedulesService.getSchedulesByUser(user_id)
-            return res.status(201).json(response)
+          const response = await this.schedulesService.getSchedulesByUser(user_id, day);
+          return res.status(201).json(response);
         } catch (error) {
-            next(error)
+          next(error);
         }
-    }
+      }
     async update(req: Request, res: Response, next: NextFunction){
         const {id, phone, name, date} = req.body
 
@@ -52,10 +56,10 @@ class SchedulesController {
         }
     }
     async delete(req: Request, res: Response, next: NextFunction){
-        const {id} = req.body
+        const {id} = req.query
 
         try {
-            const response = await this.schedulesService.delete(id)
+            const response = await this.schedulesService.delete(String(id))
             return res.status(201).json(response)
         } catch (error) {
             next(error)

@@ -54,5 +54,12 @@ class UserServices{
             token: token,
         }
     }
+    async getByUserId(id: string){
+        const response = await this.usersRepository.getByUserId(id)
+        if (!response){
+            throw new Error('User dont exists')
+        }
+        return response
+    }
 }
 export {UserServices}

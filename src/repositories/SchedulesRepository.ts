@@ -39,10 +39,14 @@ class SchedulesRepository {
         })
         return response
     }
-    async findByUserId(userId: string){
+    async findByUserId(userId: string, date: Date) {
         const response = await prisma.schedule.findMany({
             where: {
-                userId: userId
+                userId: userId,
+                date: {
+                    gte: startOfDay(date),
+                    lt: endOfDay(date)
+                }
             }
         })
         return response
