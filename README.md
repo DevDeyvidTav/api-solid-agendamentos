@@ -6,10 +6,10 @@ Esta é uma API escrita em Express com TypeScript, que tem como objetivo gerenci
 
 - ExpressJS
 - TypeScript
-- SOLID
+- Date fns
 - Prisma
 - SQLite
-- Testes unitários
+- Repository pattern
 
 ## Configuração do ambiente de desenvolvimento local
 
@@ -90,11 +90,19 @@ npm run dev
   "password": "123123"
 }
 ```
-- **PUT** /users/auth: Edita a senha de um usuário existente. Parâmetros necessários no corpo da requisição:
+- **PUT** /users: Edita a senha de um usuário existente que esqueceu suas credenciais. Parâmetros necessários no corpo da requisição:
 ```json
 {
   "email": "teste@gmail.com",
   "newPassword": "teste"
+}
+```
+- **PUT** /users/edit: Edita a senha de um usuário existente autenticado. Parâmetros necessários no corpo da requisição:
+```json
+{
+  "email": "teste@gmail.com",
+  "password": "teste"
+  "name": "Teste"
 }
 ```
   Implantação em ambiente de produção
