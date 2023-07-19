@@ -1,5 +1,5 @@
 import { compare, hash } from "bcrypt"
-import { IAuth, Icreate, Iupdate } from "../interfaces/UserInterfaces"
+import { IAuth, Icreate, Irecover, Iupdate } from "../interfaces/UserInterfaces"
 import { UsersRepository } from "../repositories/UserRepository"
 import { sign } from "jsonwebtoken"
 
@@ -21,13 +21,13 @@ class UserServices{
         })
         return response
     }
-    async update ({email, newPassword}: Iupdate){
+    async recover ({email, newPassword}: Irecover){
         const findUser = await this.usersRepository.findByEmail(email)
         if(!findUser){
             throw new Error('User dont exists')
         }
 
-        const response = await this.usersRepository.update({email, newPassword})
+        const response = await this.usersRepository.recover({email, newPassword})
         return response
     }
     async auth ({ email, password } :IAuth){
@@ -59,6 +59,10 @@ class UserServices{
         if (!response){
             throw new Error('User dont exists')
         }
+        return response
+    }
+    async update({name, email, password, id}: Iupdate){
+        const response = await this.usersRepository.update({name, email, password, id})
         return response
     }
 }

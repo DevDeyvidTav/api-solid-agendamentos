@@ -1,5 +1,5 @@
 import { prisma } from "../database/prisma";
-import { Icreate, Iupdate } from "../interfaces/UserInterfaces";
+import { Icreate, Irecover, Iupdate } from "../interfaces/UserInterfaces";
 
 
 
@@ -22,7 +22,7 @@ class UsersRepository {
         })
         return response
     }
-    async update({email, newPassword}: Iupdate){
+    async recover({email, newPassword}: Irecover){
         const response = await prisma.users.update({
             where: {
                 email: email,
@@ -42,6 +42,19 @@ class UsersRepository {
                 id: true,
                 name: true,
                 email: true
+            }
+        })
+        return response
+    }
+    async update({name, email, password, id}: Iupdate){
+        const response = await prisma.users.update({
+            where: {
+                id: id
+            },
+            data: {
+                name,
+                email,
+                password
             }
         })
         return response

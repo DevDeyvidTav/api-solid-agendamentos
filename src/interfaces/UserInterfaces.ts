@@ -4,7 +4,7 @@ export interface Icreate {
     password: string;
 }
 
-export interface Iupdate {
+export interface Irecover {
     email: string;
     newPassword: string;
 }
@@ -12,4 +12,11 @@ export interface Iupdate {
 export interface IAuth {
     email: string;
     password: string;
+}
+
+export interface Iupdate {
+    email: string;
+    password: string;
+    name: string;
+    id: string;
 }

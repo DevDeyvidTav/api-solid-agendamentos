@@ -40,10 +40,21 @@ class UsersController {
        }
 
     }
-    async update(req: Request, res: Response, next: NextFunction){
+    async recover(req: Request, res: Response, next: NextFunction){
         const { email, newPassword} = req.body
         try {
-            const response = await this.userServices.update({ email, newPassword })
+            const response = await this.userServices.recover({ email, newPassword })
+            return res.status(201).json(response)
+        } catch (error) {
+            next(error)
+        }
+    }
+    async update(req: Request, res: Response, next: NextFunction){
+        const { email, password, name} = req.body
+        const {user_id} = req
+        const id = user_id
+        try {
+            const response = await this.userServices.update({ email, password, name, id })
             return res.status(201).json(response)
         } catch (error) {
             next(error)
